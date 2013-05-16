@@ -1,5 +1,4 @@
-unsigned long
-hash(unsigned char *str)
+unsigned long hashfun(unsigned char *str)
 {
     unsigned long hash = 5381;
     int c;
