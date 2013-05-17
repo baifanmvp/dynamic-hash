@@ -1,6 +1,10 @@
 #ifndef DYNARRAY_H_
 #define DYNARRAY_H_
-typedef struct st_dynarray {
+#include <stdint.h>
+#include <stdlib.h>
+#include <stdio.h>
+typedef struct st_dynarray
+{
     // total cnt
     uint32_t acnt;
     // use cnt
@@ -12,15 +16,15 @@ typedef struct st_dynarray {
     uint16_t unitsz;
 } DYNARRAY;
 
-#define DYNARRAY_INIT(array, gcnt, unitsz)                  \
-    do                                                      \
-    {                                                       \
-        array = malloc(sizeof(DYNARRAY)+(gcnt)*(unitsz));   \
-        array->acnt = gcnt;                                 \
-        array->ucnt = 0;                                    \
-        array->gcnt = gcnt;                                 \
-        array->unitsz = unitsz;                             \
-    }                                                       \
+#define DYNARRAY_INIT(ar, gt, usz)                              \
+    do                                                          \
+    {                                                           \
+        ar = (DYNARRAY*)malloc(sizeof(DYNARRAY)+(gt)*(usz));    \
+        ar->acnt = gt;                                          \
+        ar->ucnt = 0;                                           \
+        ar->gcnt = gt;                                          \
+        ar->unitsz = usz;                                       \
+    }                                                           \
     while(0);
 
 
@@ -49,7 +53,7 @@ typedef struct st_dynarray {
 #define DYNARRAY_IDX(array, idx, ptr)                           \
     do                                                          \
     {                                                           \
-        if (idx < (array)->ucnt)                                \
+        if ((uint32_t)(idx) < (array)->ucnt)                            \
         {                                                       \
             ptr = (char*)((array) + 1) + (array)->unitsz * idx; \
         }                                                       \
@@ -60,5 +64,7 @@ typedef struct st_dynarray {
     }                                                           \
     while(0);
 
+#define DYNARRAY_GET_IDX(array, ptr)                                    \
+    (((size_t)(ptr) - (size_t)(array) - sizeof(DYNARRAY))/(array)->unitsz)
 
 #endif

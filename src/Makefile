@@ -44,7 +44,8 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_hash_OBJECTS = main.$(OBJEXT) hashfunction.$(OBJEXT)
+am_hash_OBJECTS = main.$(OBJEXT) hashfunction.$(OBJEXT) \
+	dynhash.$(OBJEXT)
 hash_OBJECTS = $(am_hash_OBJECTS)
 hash_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I.
@@ -147,7 +148,7 @@ top_build_prefix = ../
 top_builddir = ..
 top_srcdir = ..
 AUTOMAKE_OPTIONS = foreign
-hash_SOURCES = main.c hashfunction.c
+hash_SOURCES = main.c hashfunction.c dynhash.c
 all: all-am
 
 .SUFFIXES:
@@ -229,6 +230,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+include ./$(DEPDIR)/dynhash.Po
 include ./$(DEPDIR)/hashfunction.Po
 include ./$(DEPDIR)/main.Po
 

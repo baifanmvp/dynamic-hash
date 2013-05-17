@@ -1,6 +1,7 @@
 #ifndef DYNHASH_H_
 #define DYNHASH_H_
 #include "dynarray.h"
+typedef unsigned char uchar;
 typedef uchar* (*dynhash_get_key)(const uchar *);
 typedef void (*dynhash_free_key)(void *);
 
@@ -16,7 +17,7 @@ typedef struct st_dynhash
     size_t hmod;   // hashval % hmod
     ulong hlen;    // hash map size
     uint flags;
-    DYNARRAY array;				/* Place for hash_keys */
+    DYNARRAY* array;				/* Place for hash_keys */
     dynhash_get_key getkey;
     dynhash_free_key freekey;
     dynhash_function fnhash;
