@@ -49,13 +49,26 @@ typedef struct st_dynarray
     }                                                                   \
     while(0);
 
+#define DYNARRAY_APPEND_SPACE(array)                                      \
+    do                                                                  \
+    {                                                                   \
+        if(array->acnt == array->ucnt)                                  \
+        {                                                               \
+            array->acnt += array->gcnt;                                 \
+            array = realloc(array, sizeof(DYNARRAY) + (array)->acnt * (array)->unitsz ); \
+        }                                                               \
+        array->ucnt++;                                                  \
+    }                                                                   \
+    while(0);
+
+
 
 #define DYNARRAY_IDX(array, idx, ptr)                           \
     do                                                          \
     {                                                           \
         if ((uint32_t)(idx) < (array)->ucnt)                            \
         {                                                       \
-            ptr = (char*)((array) + 1) + (array)->unitsz * idx; \
+            ptr = (char*)((array) + 1) + (array)->unitsz * idx;   \
         }                                                       \
         else                                                    \
         {                                                       \

@@ -51,7 +51,7 @@ unsigned long dynhash_hash_pos(DYNHASH* phash, void* key)
 
 DYNHNODE* dynhash_search(DYNHASH* phash, void* data)
 {
-    if(!phash)
+    if(!phash || !phash->hlen)
     {
         return NULL;
     }
@@ -79,10 +79,19 @@ DYNHNODE* dynhash_search(DYNHASH* phash, void* data)
         if(strcmp(key, lp_org_key) == 0)
         {
             //find it!
+            size_t n_real_idx = 0;
+            if((n_real_idx = dynhash_hash_pos(phash, lp_org_key)) == n_next_idx)
+            {
+                printf("key [%s] pos %d [really][%d] \n", key, n_next_idx, n_real_idx);
+            }
+            else
+            {
+                printf("key [%s] pos %d [dummy][%d]\n", key, n_next_idx, n_real_idx);
+            }
             return hnode;
         }
         
-    }while((n_next_idx = hnode->next) != 0);
+    }while((n_next_idx = hnode->next) != HNODE_INVALID_IDX);
     return NULL;
 }
 
@@ -99,15 +108,21 @@ int dynhash_insert (DYNHASH* phash, void* data)
         return 0;
     }
 
-
-
+    //为后面加入的hashval预先扩展一个单元的空间
+    DYNARRAY_APPEND_SPACE(phash->array);
     
+    if(phash->hlen == phash->hmod)
+        phash->hmod += phash->hmod;
+
+        
     size_t n_old_idx = phash->hlen - (phash->hmod >> 1);
     size_t n_new_idx = phash->hlen;
     size_t n_empty_idx = phash->hlen;
     DYNHNODE* p_old_node;
     DYNHNODE* p_new_node = NULL;
     DYNHNODE* p_empty_node = NULL;
+
+
     
     if(phash->hlen != n_old_idx)
     {
@@ -118,7 +133,9 @@ int dynhash_insert (DYNHASH* phash, void* data)
         
         char* lp_old_key = phash->getkey(p_old_node->data);
         unsigned long n_real_idx = dynhash_hash_pos(phash, lp_old_key);
-
+        
+        DYNARRAY_IDX(phash->array, n_empty_idx, p_empty_node);
+        
         if(n_real_idx == n_old_idx || n_real_idx == n_new_idx)
         {
             
@@ -148,7 +165,6 @@ int dynhash_insert (DYNHASH* phash, void* data)
                     {
                         //delete list head
                         n_old_idx = p_iter_node->next;
-                        p_old_node = p_iter_node;
                         n_last_idx = p_iter_node->next;
                         n_iter_idx = p_iter_node->next;
                     }
@@ -156,7 +172,7 @@ int dynhash_insert (DYNHASH* phash, void* data)
                     if(p_new_node)
                     {
                         p_iter_node->next = HNODE_INVALID_IDX;
-                        p_tail_node->next = n_iter_idx;
+                        p_tail_node->next = DYNARRAY_GET_IDX(phash->array, p_iter_node);
                         p_tail_node = p_iter_node;
                     }
                     else
@@ -173,16 +189,23 @@ int dynhash_insert (DYNHASH* phash, void* data)
                 }
                 
             }
-            //move new_node to empty_node
-            DYNARRAY_IDX(phash->array, n_empty_idx, p_empty_node);
-            p_empty_node->data = p_new_node->data;
-            p_empty_node->next = p_new_node->next;
-            p_empty_node = p_new_node;
+            
+            if(p_new_node)
+            {
+                //move new_node to empty_node
+                //如果原hash链能分裂出新的链（也就是该链上有hashkey通过新的算法能算出新的位置），那么把新链的头移动到新增的hashnode位置
+                p_empty_node->data = p_new_node->data;
+                p_empty_node->next = p_new_node->next;
+                p_empty_node = p_new_node;
+                n_empty_idx = DYNARRAY_GET_IDX(phash->array, p_new_node);
+            }
 
             //看看老的list头是否改变过，改变了说明老的list的值算出的位置是属于new node，且已经在上两行代码中已经移动过去了
-            if( n_old_idx != ((phash->hlen - 1) - (phash->hmod >> 1)) )
+            if( (n_old_idx != HNODE_INVALID_IDX) && (n_old_idx != ((phash->hlen - 1) - (phash->hmod >> 1)) ) )
             {
                 //move old_node head to origin position
+                DYNARRAY_IDX(phash->array, n_old_idx, p_old_node);
+                
                 p_empty_node->data = p_old_node->data;
                 p_empty_node->next = p_old_node->next;
                 p_empty_node = p_old_node;
@@ -241,7 +264,7 @@ int dynhash_insert (DYNHASH* phash, void* data)
                 p_empty_node->data = p_insert_node->data;
                 p_empty_node->next = p_insert_node->next;
                 p_insert_node->data = data;
-                p_empty_node->next = HNODE_INVALID_IDX;
+                p_insert_node->next = HNODE_INVALID_IDX;
                 
             }
             
@@ -250,11 +273,14 @@ int dynhash_insert (DYNHASH* phash, void* data)
     }
     else
     {
+        
         DYNHNODE* p_insert_node;
         DYNARRAY_IDX(phash->array, phash->hlen, p_insert_node);
         p_insert_node->data = data;
         p_insert_node->next = HNODE_INVALID_IDX;
         
+        phash->hlen += 1;
+    
     }
 
 }

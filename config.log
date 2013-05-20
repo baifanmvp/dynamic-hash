@@ -79,27 +79,27 @@ gcc.real: unrecognized option '-qversion'
 gcc.real: no input files
 configure:2823: $? = 1
 configure:2843: checking whether the C compiler works
-configure:2865: gcc -g3 -Wall -O0    conftest.c  >&5
+configure:2865: gcc -g3 -O0 -Wall   conftest.c  >&5
 configure:2869: $? = 0
 configure:2918: result: yes
 configure:2921: checking for C compiler default output file name
 configure:2923: result: a.out
 configure:2929: checking for suffix of executables
-configure:2936: gcc -o conftest -g3 -Wall -O0    conftest.c  >&5
+configure:2936: gcc -o conftest -g3 -O0 -Wall   conftest.c  >&5
 configure:2940: $? = 0
 configure:2962: result: 
 configure:2984: checking whether we are cross compiling
-configure:2992: gcc -o conftest -g3 -Wall -O0    conftest.c  >&5
+configure:2992: gcc -o conftest -g3 -O0 -Wall   conftest.c  >&5
 configure:2996: $? = 0
 configure:3003: ./conftest
 configure:3007: $? = 0
 configure:3022: result: no
 configure:3027: checking for suffix of object files
-configure:3049: gcc -c -g3 -Wall -O0   conftest.c >&5
+configure:3049: gcc -c -g3 -O0 -Wall  conftest.c >&5
 configure:3053: $? = 0
 configure:3074: result: o
 configure:3078: checking whether we are using the GNU C compiler
-configure:3097: gcc -c -g3 -Wall -O0   conftest.c >&5
+configure:3097: gcc -c -g3 -O0 -Wall  conftest.c >&5
 configure:3097: $? = 0
 configure:3106: result: yes
 configure:3115: checking whether gcc accepts -g
@@ -107,7 +107,7 @@ configure:3135: gcc -c -g  conftest.c >&5
 configure:3135: $? = 0
 configure:3176: result: yes
 configure:3193: checking for gcc option to accept ISO C89
-configure:3257: gcc  -c -g3 -Wall -O0   conftest.c >&5
+configure:3257: gcc  -c -g3 -O0 -Wall  conftest.c >&5
 configure:3257: $? = 0
 configure:3270: result: none needed
 configure:3301: checking for style of include used by make
@@ -155,47 +155,47 @@ configure:3680: result: /bin/grep
 configure:3685: checking for egrep
 configure:3747: result: /bin/grep -E
 configure:3752: checking for ANSI C header files
-configure:3772: gcc -c -g3 -Wall -O0   conftest.c >&5
+configure:3772: gcc -c -g3 -O0 -Wall  conftest.c >&5
 configure:3772: $? = 0
-configure:3845: gcc -o conftest -g3 -Wall -O0    conftest.c  >&5
+configure:3845: gcc -o conftest -g3 -O0 -Wall   conftest.c  >&5
 configure:3845: $? = 0
 configure:3845: ./conftest
 configure:3845: $? = 0
 configure:3856: result: yes
 configure:3869: checking for sys/types.h
-configure:3869: gcc -c -g3 -Wall -O0   conftest.c >&5
+configure:3869: gcc -c -g3 -O0 -Wall  conftest.c >&5
 configure:3869: $? = 0
 configure:3869: result: yes
 configure:3869: checking for sys/stat.h
-configure:3869: gcc -c -g3 -Wall -O0   conftest.c >&5
+configure:3869: gcc -c -g3 -O0 -Wall  conftest.c >&5
 configure:3869: $? = 0
 configure:3869: result: yes
 configure:3869: checking for stdlib.h
-configure:3869: gcc -c -g3 -Wall -O0   conftest.c >&5
+configure:3869: gcc -c -g3 -O0 -Wall  conftest.c >&5
 configure:3869: $? = 0
 configure:3869: result: yes
 configure:3869: checking for string.h
-configure:3869: gcc -c -g3 -Wall -O0   conftest.c >&5
+configure:3869: gcc -c -g3 -O0 -Wall  conftest.c >&5
 configure:3869: $? = 0
 configure:3869: result: yes
 configure:3869: checking for memory.h
-configure:3869: gcc -c -g3 -Wall -O0   conftest.c >&5
+configure:3869: gcc -c -g3 -O0 -Wall  conftest.c >&5
 configure:3869: $? = 0
 configure:3869: result: yes
 configure:3869: checking for strings.h
-configure:3869: gcc -c -g3 -Wall -O0   conftest.c >&5
+configure:3869: gcc -c -g3 -O0 -Wall  conftest.c >&5
 configure:3869: $? = 0
 configure:3869: result: yes
 configure:3869: checking for inttypes.h
-configure:3869: gcc -c -g3 -Wall -O0   conftest.c >&5
+configure:3869: gcc -c -g3 -O0 -Wall  conftest.c >&5
 configure:3869: $? = 0
 configure:3869: result: yes
 configure:3869: checking for stdint.h
-configure:3869: gcc -c -g3 -Wall -O0   conftest.c >&5
+configure:3869: gcc -c -g3 -O0 -Wall  conftest.c >&5
 configure:3869: $? = 0
 configure:3869: result: yes
 configure:3869: checking for unistd.h
-configure:3869: gcc -c -g3 -Wall -O0   conftest.c >&5
+configure:3869: gcc -c -g3 -O0 -Wall  conftest.c >&5
 configure:3869: $? = 0
 configure:3869: result: yes
 configure:3884: checking for stdint.h
@@ -229,7 +229,7 @@ ac_cv_c_compiler_gnu=yes
 ac_cv_env_CC_set=
 ac_cv_env_CC_value=
 ac_cv_env_CFLAGS_set=set
-ac_cv_env_CFLAGS_value='-g3 -Wall -O0 '
+ac_cv_env_CFLAGS_value='-g3 -O0 -Wall'
 ac_cv_env_CPPFLAGS_set=
 ac_cv_env_CPPFLAGS_value=
 ac_cv_env_CPP_set=
@@ -282,7 +282,7 @@ AUTOMAKE='${SHELL} /home/bf/bf_tmp/dynamic-hash/missing --run automake-1.11'
 AWK='gawk'
 CC='gcc'
 CCDEPMODE='depmode=gcc3'
-CFLAGS='-g3 -Wall -O0 '
+CFLAGS='-g3 -O0 -Wall'
 CPP='gcc -E'
 CPPFLAGS=''
 CYGPATH_W='echo'
@@ -382,39 +382,3 @@ target_alias=''
 #define HAVE_STDINT_H 1
 
 configure: exit 0
-
-## ---------------------- ##
-## Running config.status. ##
-## ---------------------- ##
-
-This file was extended by FULL-PACKAGE-NAME config.status VERSION, which was
-generated by GNU Autoconf 2.65.  Invocation command line was
-
-  CONFIG_FILES    = 
-  CONFIG_HEADERS  = 
-  CONFIG_LINKS    = 
-  CONFIG_COMMANDS = 
-  $ ./config.status src/Makefile depfiles
-
-on bf
-
-config.status:776: creating src/Makefile
-config.status:939: executing depfiles commands
-
-## ---------------------- ##
-## Running config.status. ##
-## ---------------------- ##
-
-This file was extended by FULL-PACKAGE-NAME config.status VERSION, which was
-generated by GNU Autoconf 2.65.  Invocation command line was
-
-  CONFIG_FILES    = 
-  CONFIG_HEADERS  = 
-  CONFIG_LINKS    = 
-  CONFIG_COMMANDS = 
-  $ ./config.status src/Makefile depfiles
-
-on bf
-
-config.status:776: creating src/Makefile
-config.status:939: executing depfiles commands

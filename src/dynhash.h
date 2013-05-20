@@ -1,5 +1,6 @@
 #ifndef DYNHASH_H_
 #define DYNHASH_H_
+#include "hashfunction.h"
 #include "dynarray.h"
 typedef unsigned char uchar;
 typedef uchar* (*dynhash_get_key)(const uchar *);
@@ -25,5 +26,15 @@ typedef struct st_dynhash
 
 #define HNODE_INVALID_IDX ((size_t)(-1))
 
+
+DYNHASH* dynhash_new(dynhash_get_key getkey, dynhash_free_key freekey, dynhash_function fnhash);
+
+int dynhash_delete(DYNHASH* phash);
+
+unsigned long dynhash_hash_pos(DYNHASH* phash, void* key);
+
+DYNHNODE* dynhash_search(DYNHASH* phash, void* data);
+
+int dynhash_insert (DYNHASH* phash, void* data);
 
 #endif
