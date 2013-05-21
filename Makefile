@@ -105,7 +105,7 @@ AUTOMAKE = ${SHELL} /home/bf/bf_tmp/dynamic-hash/missing --run automake-1.11
 AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
-CFLAGS = -g3 -O0 -Wall
+CFLAGS = -g3 -Wall -O0 
 CPP = gcc -E
 CPPFLAGS = 
 CYGPATH_W = echo

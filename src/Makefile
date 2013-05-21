@@ -44,10 +44,10 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_hash_OBJECTS = main.$(OBJEXT) hashfunction.$(OBJEXT) \
-	dynhash.$(OBJEXT)
+am_hash_OBJECTS = hash-main.$(OBJEXT) hash-hashfunction.$(OBJEXT) \
+	hash-dynhash.$(OBJEXT)
 hash_OBJECTS = $(am_hash_OBJECTS)
-hash_LDADD = $(LDADD)
+hash_DEPENDENCIES =
 DEFAULT_INCLUDES = -I.
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -69,7 +69,7 @@ AUTOMAKE = ${SHELL} /home/bf/bf_tmp/dynamic-hash/missing --run automake-1.11
 AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
-CFLAGS = -g  -Wall -O0
+CFLAGS = -pg -g  -Wall -O0
 CPP = gcc -E
 CPPFLAGS = 
 CYGPATH_W = echo
@@ -149,6 +149,8 @@ top_builddir = ..
 top_srcdir = ..
 AUTOMAKE_OPTIONS = foreign
 hash_SOURCES = main.c hashfunction.c dynhash.c
+hash_CPPFLAGS = -L/usr/local/lib -I/usr/local/include/glib-2.0 -I/usr/local/lib/glib-2.0/include  
+hash_LDADD = -lglib-2.0
 all: all-am
 
 .SUFFIXES:
@@ -230,9 +232,9 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-include ./$(DEPDIR)/dynhash.Po
-include ./$(DEPDIR)/hashfunction.Po
-include ./$(DEPDIR)/main.Po
+include ./$(DEPDIR)/hash-dynhash.Po
+include ./$(DEPDIR)/hash-hashfunction.Po
+include ./$(DEPDIR)/hash-main.Po
 
 .c.o:
 	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -247,6 +249,48 @@ include ./$(DEPDIR)/main.Po
 #	source='$<' object='$@' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(COMPILE) -c `$(CYGPATH_W) '$<'`
+
+hash-main.o: main.c
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(hash_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT hash-main.o -MD -MP -MF $(DEPDIR)/hash-main.Tpo -c -o hash-main.o `test -f 'main.c' || echo '$(srcdir)/'`main.c
+	$(am__mv) $(DEPDIR)/hash-main.Tpo $(DEPDIR)/hash-main.Po
+#	source='main.c' object='hash-main.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(hash_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o hash-main.o `test -f 'main.c' || echo '$(srcdir)/'`main.c
+
+hash-main.obj: main.c
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(hash_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT hash-main.obj -MD -MP -MF $(DEPDIR)/hash-main.Tpo -c -o hash-main.obj `if test -f 'main.c'; then $(CYGPATH_W) 'main.c'; else $(CYGPATH_W) '$(srcdir)/main.c'; fi`
+	$(am__mv) $(DEPDIR)/hash-main.Tpo $(DEPDIR)/hash-main.Po
+#	source='main.c' object='hash-main.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(hash_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o hash-main.obj `if test -f 'main.c'; then $(CYGPATH_W) 'main.c'; else $(CYGPATH_W) '$(srcdir)/main.c'; fi`
+
+hash-hashfunction.o: hashfunction.c
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(hash_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT hash-hashfunction.o -MD -MP -MF $(DEPDIR)/hash-hashfunction.Tpo -c -o hash-hashfunction.o `test -f 'hashfunction.c' || echo '$(srcdir)/'`hashfunction.c
+	$(am__mv) $(DEPDIR)/hash-hashfunction.Tpo $(DEPDIR)/hash-hashfunction.Po
+#	source='hashfunction.c' object='hash-hashfunction.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(hash_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o hash-hashfunction.o `test -f 'hashfunction.c' || echo '$(srcdir)/'`hashfunction.c
+
+hash-hashfunction.obj: hashfunction.c
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(hash_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT hash-hashfunction.obj -MD -MP -MF $(DEPDIR)/hash-hashfunction.Tpo -c -o hash-hashfunction.obj `if test -f 'hashfunction.c'; then $(CYGPATH_W) 'hashfunction.c'; else $(CYGPATH_W) '$(srcdir)/hashfunction.c'; fi`
+	$(am__mv) $(DEPDIR)/hash-hashfunction.Tpo $(DEPDIR)/hash-hashfunction.Po
+#	source='hashfunction.c' object='hash-hashfunction.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(hash_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o hash-hashfunction.obj `if test -f 'hashfunction.c'; then $(CYGPATH_W) 'hashfunction.c'; else $(CYGPATH_W) '$(srcdir)/hashfunction.c'; fi`
+
+hash-dynhash.o: dynhash.c
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(hash_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT hash-dynhash.o -MD -MP -MF $(DEPDIR)/hash-dynhash.Tpo -c -o hash-dynhash.o `test -f 'dynhash.c' || echo '$(srcdir)/'`dynhash.c
+	$(am__mv) $(DEPDIR)/hash-dynhash.Tpo $(DEPDIR)/hash-dynhash.Po
+#	source='dynhash.c' object='hash-dynhash.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(hash_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o hash-dynhash.o `test -f 'dynhash.c' || echo '$(srcdir)/'`dynhash.c
+
+hash-dynhash.obj: dynhash.c
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(hash_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT hash-dynhash.obj -MD -MP -MF $(DEPDIR)/hash-dynhash.Tpo -c -o hash-dynhash.obj `if test -f 'dynhash.c'; then $(CYGPATH_W) 'dynhash.c'; else $(CYGPATH_W) '$(srcdir)/dynhash.c'; fi`
+	$(am__mv) $(DEPDIR)/hash-dynhash.Tpo $(DEPDIR)/hash-dynhash.Po
+#	source='dynhash.c' object='hash-dynhash.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(hash_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o hash-dynhash.obj `if test -f 'dynhash.c'; then $(CYGPATH_W) 'dynhash.c'; else $(CYGPATH_W) '$(srcdir)/dynhash.c'; fi`
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \

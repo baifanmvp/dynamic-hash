@@ -36,13 +36,13 @@ int dynhash_delete(DYNHASH* phash)
 unsigned long dynhash_hash_pos(DYNHASH* phash, void* key)
 {
     unsigned long hashval = phash->fnhash((unsigned char*)key);
-    if(hashval % phash->hmod < phash->hlen)
+    if((hashval & (phash->hmod -1)) < phash->hlen)
     {
-        return hashval % phash->hmod;
+        return hashval & (phash->hmod -1);
     }
     else
     {
-        return hashval % (phash->hmod >> 1);
+        return hashval & ((phash->hmod >> 1) -1);
     }
     
 }
@@ -79,15 +79,15 @@ DYNHNODE* dynhash_search(DYNHASH* phash, void* data)
         if(strcmp(key, lp_org_key) == 0)
         {
             //find it!
-            size_t n_real_idx = 0;
-            if((n_real_idx = dynhash_hash_pos(phash, lp_org_key)) == n_next_idx)
-            {
-                printf("key [%s] pos %d [really][%d] \n", key, n_next_idx, n_real_idx);
-            }
-            else
-            {
-                printf("key [%s] pos %d [dummy][%d]\n", key, n_next_idx, n_real_idx);
-            }
+            /* size_t n_real_idx = 0; */
+            /* if((n_real_idx = dynhash_hash_pos(phash, lp_org_key)) == n_next_idx) */
+            /* { */
+            /*     printf("key [%s] pos %d [really][%d] \n", key, n_next_idx, n_real_idx); */
+            /* } */
+            /* else */
+            /* { */
+            /*     printf("key [%s] pos %d [dummy][%d]\n", key, n_next_idx, n_real_idx); */
+            /* } */
             return hnode;
         }
         
