@@ -1,5 +1,6 @@
 #include "dynhash.h"
 
+#include <time.h>
 #include <stdint.h>
 #include <stdio.h>
 
@@ -22,7 +23,8 @@ int main()
     int i = 0;
     DYNARRAY* array = NULL;
     DYNARRAY_INIT(array, 4096, sizeof(int));
-    while(i++ < 10)
+    srand(time(0));
+    while(i++ < 10000)
     {
         printf("=========================%d====================\n", i);
         int random = rand()%10000;
